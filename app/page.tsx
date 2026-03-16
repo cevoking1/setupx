@@ -1,6 +1,7 @@
 'use client'; 
 
 import React, { useState } from 'react';
+import { useCart } from './context/CartContext';
 import Link from 'next/link';
 import { 
   BarChart3, ShoppingCart, User, ChevronRight, MessageCircle,
@@ -9,6 +10,7 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
+  const { cart } = useCart();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const categories = [
@@ -49,9 +51,13 @@ export default function Home() {
           <div className="flex items-center justify-end gap-8 text-white/60">
             <BarChart3 size={20} className="hover:text-brand cursor-pointer" />
             <div className="relative group cursor-pointer">
-               <ShoppingCart size={20} className="group-hover:text-brand transition-colors" />
-               <span className="absolute -top-2 -right-2 bg-brand text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-            </div>
+   <ShoppingCart size={20} className="group-hover:text-brand transition-colors" />
+   {cart.length > 0 && (
+     <span className="absolute -top-2 -right-2 bg-brand text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-bounce">
+       {cart.length}
+     </span>
+   )}
+</div>
             <User size={20} className="hover:text-brand cursor-pointer transition-colors" />
           </div>
         </div>

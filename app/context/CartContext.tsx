@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const CartContext = createContext<any>(null);
 
@@ -7,15 +7,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<any[]>([]);
 
   const addToCart = (product: any) => {
+    // Предотвращаем дублирование или просто добавляем
     setCart((prev) => [...prev, product]);
   };
 
-  const clearCart = () => setCart([]);
+  const removeFromCart = (id: string) => {
+    setCart((prev) => prev.filter(item => item.id !== id));
+  };
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const clearCart = () => setCart([]);
+  const totalPrice = cart.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, clearCart, totalPrice }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, totalPrice }}>
       {children}
     </CartContext.Provider>
   );

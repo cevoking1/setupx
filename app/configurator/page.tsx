@@ -1,13 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../../lib/supabase';
 import { Cpu, BarChart3, HardDrive, Database, Zap, Box, CheckCircle2, ChevronRight, ShoppingCart } from 'lucide-react';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export default function ConfiguratorPage() {
   const [currentStep, setCurrentStep] = useState(0);
